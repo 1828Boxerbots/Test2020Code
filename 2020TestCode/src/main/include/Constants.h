@@ -24,4 +24,5 @@ constexpr int PWM_SHOOTMOTOR = 5;
 constexpr int PWM_TURRETMOTOR = 4;
 constexpr int PWM_LOADMOTOR = 9;
 
+//comment #define NOHW to enable all hardware code and uncomment it to disable all hardware code
 //#define NOHW

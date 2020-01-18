@@ -56,14 +56,18 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem)
 void RobotContainer::ConfigureButtonBindings()
 {
   //5 = Bumper left, 6 = Bumper right
+ //frc::SmartDashboard::PutString("Configure Buttons", "Running");
+
   frc2::JoystickButton(&m_controller, 5).WhenPressed(&m_turretTurnLeft);
   frc2::JoystickButton(&m_controller, 6).WhenPressed(&m_turretTurnRight);
 
   // Configure your button bindings here
-
+   //frc::SmartDashboard::PutString("Configure Buttons", "DONE");
 }
 
-frc2::Command* RobotContainer::GetAutonomousCommand() {
+frc2::Command* RobotContainer::GetAutonomousCommand()
+{
   // An example command will be run in autonomous
   return &m_autonomousCommand;
 }
+

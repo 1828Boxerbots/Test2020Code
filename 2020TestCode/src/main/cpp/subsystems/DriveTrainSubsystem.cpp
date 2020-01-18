@@ -24,6 +24,30 @@ void DriveTrainSubsystem::Periodic() {}
         m_rightMotor.Set(rightY);
         #endif
   }
+  void DriveTrainSubsystem::Stop()
+  {
+    #ifndef NOHW
+    m_leftMotor.Set(STOP);
+    m_rightMotor.Set(STOP);
+    #endif
+  }
+  void DriveTrainSubsystem::DriveForwardInSeconds(double goalTime)
+{
+    if(goalTime > 0)
+    {
+    double endTime = time.Get() + goalTime;
+      MoveTank(1.0, 1.0);
+      while(time.Get() < endTime){}
+    }
+      Stop();
+}
+void TurnInRelativeDegrees(double angle)
+{
+  #ifndef NOHW
+  m_gyro.Reset();
+  m_gyro.Calibrate();
+  #endif
+}
 
   void DriveTrainSubsystem::Init()
   {
