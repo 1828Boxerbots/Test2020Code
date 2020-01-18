@@ -48,6 +48,7 @@ class RobotContainer {
 
   frc2::RunCommand m_turretTurnLeft{[this] {m_turret.Turn(-1.0);}, {&m_turret}};
   frc2::RunCommand m_turretTurnRight{[this] {m_turret.Turn(1.0);}, {&m_turret}};
+  frc2::RunCommand m_turretStop{[this] {m_turret.Turn(0.0);}, {&m_turret}};
 
   frc2::RunCommand m_loaderEject{[this] {m_loader.LoadMotor(-1.0);}, {&m_loader}};
   frc2::RunCommand m_loaderLoad{[this] {m_loader.LoadMotor(1.0);}, {&m_loader}};

@@ -24,12 +24,12 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem)
 
     frc::SmartDashboard::PutNumber("Turret Angle", m_turret.m_turretAngle);
 
-    m_turret.SetDefaultCommand(frc2::RunCommand(
+    /*m_turret.SetDefaultCommand(frc2::RunCommand(
     [this] 
     {
       m_turret.Turn(m_controller.GetAButton(), m_controller.GetBButton());
     }
-    ,{&m_turret}));
+    ,{&m_turret}));*/
 
     /*m_loader.SetDefaultCommand(frc2::RunCommand(
     [this] 
@@ -56,10 +56,17 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem)
 void RobotContainer::ConfigureButtonBindings()
 {
   //5 = Bumper left, 6 = Bumper right
-  frc2::JoystickButton(&m_controller, 5).WhenPressed(&m_turretTurnLeft);
-  frc2::JoystickButton(&m_controller, 6).WhenPressed(&m_turretTurnRight);
+  //frc2::JoystickButton(&m_controller, 5).WhenPressed(&m_turretTurnLeft);
+  //frc2::JoystickButton(&m_controller, 6).WhenPressed(&m_turretTurnRight);
 
   // Configure your button bindings here
+  frc2::Button buttonA{[this] {return m_controller.GetAButton();}};
+  buttonA.WhileHeld(&m_turretTurnLeft);
+  //buttonA.WhenReleased(&m_turretStop);
+
+  frc2::Button buttonB{[this] {return m_controller.GetBButton();}};
+  buttonB.WhenHeld(&m_turretTurnLeft);
+  //buttonB.WhenReleased(&m_turretStop);
 
 }
 
