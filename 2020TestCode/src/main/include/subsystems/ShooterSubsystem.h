@@ -8,27 +8,27 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
-#include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/Spark.h>
-#include "Constants.h"
-#include "Util.h"
+#include "../Constants.h"
 
-class DriveTrainSubsystem : public frc2::SubsystemBase {
+class ShooterSubsystem : public frc2::SubsystemBase {
  public:
-  DriveTrainSubsystem();
+  ShooterSubsystem();
+
+  void Shoot(double shootSpeed);
+  void ShootBump(bool bump);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic();
-  void MoveTank(double leftY, double rightY);
-  void Init();
 
  private:
+ const double SHOOTSPEED = 1.0;
+
  #ifndef NOHW
-  frc::Spark m_leftMotor{PWM_LEFTMOTOR};
-  frc::Spark m_rightMotor{PWM_RIGHTMOTOR};
-  #endif
+ frc::Spark m_shooterMotor {PWM_SHOOTMOTOR};
+ #endif
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 };

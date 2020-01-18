@@ -17,7 +17,8 @@
 #include "subsystems/TurretSubystem.h"
 #include <frc2/command/RunCommand.h>
 #include <frc2/command/InstantCommand.h>
-
+#include "subsystems/LoaderSubsystem.h"
+#include "subsystems/ShooterSubsystem.h"
 
 
 /**
@@ -42,9 +43,14 @@ class RobotContainer {
   frc::XboxController m_controller{USB_CONTROLLER_ONE};
   DriveTrainSubsystem m_drive;
   TurretSubystem m_turret;
+  LoaderSubsystem m_loader;
+  ShooterSubsystem m_shooter;
 
-  frc2::RunCommand m_turretTurnLeft{[this] {m_turret.TurnRight(-1.0);}, {&m_turret}};
-  frc2::RunCommand m_turretTurnRight{[this] {m_turret.TurnRight(1.0);}, {&m_turret}};
+  frc2::RunCommand m_turretTurnLeft{[this] {m_turret.Turn(-1.0);}, {&m_turret}};
+  frc2::RunCommand m_turretTurnRight{[this] {m_turret.Turn(1.0);}, {&m_turret}};
+
+  frc2::RunCommand m_loaderEject{[this] {m_loader.LoadMotor(-1.0);}, {&m_loader}};
+  frc2::RunCommand m_loaderLoad{[this] {m_loader.LoadMotor(1.0);}, {&m_loader}};
 
   void ConfigureButtonBindings();
 };

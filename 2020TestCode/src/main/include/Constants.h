@@ -17,3 +17,11 @@
  * they are needed.
  */
 constexpr int USB_CONTROLLER_ONE = 0;
+
+constexpr int PWM_LEFTMOTOR = 2;
+constexpr int PWM_RIGHTMOTOR = 3;
+constexpr int PWM_SHOOTMOTOR = 5;
+constexpr int PWM_TURRETMOTOR = 4;
+constexpr int PWM_LOADMOTOR = 9;
+
+//#define NOHW

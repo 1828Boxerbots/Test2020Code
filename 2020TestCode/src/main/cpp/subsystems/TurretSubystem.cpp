@@ -11,8 +11,30 @@ TurretSubystem::TurretSubystem() {}
 
 // This method will be called once per scheduler run
 void TurretSubystem::Periodic() {}
-void TurretSubystem::TurnRight(double angle)
+void TurretSubystem::Turn(double angle)
 {
     m_turretAngle += angle;
+    m_turretAngle = Util::Limit(m_turretAngle, LOWERLIMIT, UPPERLIMIT);
     frc::SmartDashboard::PutNumber("Turret Angle", m_turretAngle);
+}
+
+void TurretSubystem::Turn(bool aButton, bool bButton)
+{
+    double motorSpeed;
+    if(aButton == true && bButton == false)
+    {
+        motorSpeed = -MOTORSPEED;
+    }
+    else if(aButton == false && bButton == true)
+    {
+        motorSpeed = MOTORSPEED;
+    }
+    else
+    {
+        motorSpeed = 0.0;
+    }
+    #ifndef NOHW
+    m_turretMotor.Set(motorSpeed);
+    #endif
+    frc::SmartDashboard::PutNumber("Turret Speed", motorSpeed);
 }

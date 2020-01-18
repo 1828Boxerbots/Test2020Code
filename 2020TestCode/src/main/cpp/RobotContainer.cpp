@@ -14,20 +14,50 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem)
 
   // Configure the button bindings
   ConfigureButtonBindings();
+  m_drive.Init();
   m_drive.SetDefaultCommand(frc2::RunCommand(
     [this] 
     {
       m_drive.MoveTank(m_controller.GetY(frc::GenericHID::kLeftHand), m_controller.GetY(frc::GenericHID::kRightHand));
     }
     ,{&m_drive}));
+
     frc::SmartDashboard::PutNumber("Turret Angle", m_turret.m_turretAngle);
+
+    m_turret.SetDefaultCommand(frc2::RunCommand(
+    [this] 
+    {
+      m_turret.Turn(m_controller.GetAButton(), m_controller.GetBButton());
+    }
+    ,{&m_turret}));
+
+    /*m_loader.SetDefaultCommand(frc2::RunCommand(
+    [this] 
+    {
+      m_loader.Load(m_controller.GetTriggerAxis(frc::GenericHID::kLeftHand), m_controller.GetTriggerAxis(frc::GenericHID::kRightHand));
+    }
+    ,{&m_loader}));*/
+
+    m_loader.SetDefaultCommand(frc2::RunCommand(
+    [this] 
+    {
+      m_loader.LoadXY(m_controller.GetXButton(), m_controller.GetYButton());
+    }
+    ,{&m_loader}));
+
+    m_shooter.SetDefaultCommand(frc2::RunCommand(
+    [this] 
+    {
+      m_shooter.ShootBump(m_controller.GetBumper(frc::GenericHID::kLeftHand) || m_controller.GetBumper(frc::GenericHID::kRightHand));
+    }
+    ,{&m_shooter}));
 }
 
-void RobotContainer::ConfigureButtonBindings() 
+void RobotContainer::ConfigureButtonBindings()
 {
   //5 = Bumper left, 6 = Bumper right
-  frc2::JoystickButton(&m_controller, 1).WhenPressed(&m_turretTurnLeft);
-  frc2::JoystickButton(&m_controller, 2).WhenPressed(&m_turretTurnRight);
+  frc2::JoystickButton(&m_controller, 5).WhenPressed(&m_turretTurnLeft);
+  frc2::JoystickButton(&m_controller, 6).WhenPressed(&m_turretTurnRight);
 
   // Configure your button bindings here
 
