@@ -21,6 +21,7 @@
 #include "subsystems/ShooterSubsystem.h"
 
 
+
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -46,12 +47,16 @@ class RobotContainer {
   LoaderSubsystem m_loader;
   ShooterSubsystem m_shooter;
 
-  frc2::RunCommand m_turretTurnLeft{[this] {m_turret.Turn(-1.0);}, {&m_turret}};
-  frc2::RunCommand m_turretTurnRight{[this] {m_turret.Turn(1.0);}, {&m_turret}};
-  frc2::RunCommand m_turretStop{[this] {m_turret.Turn(0.0);}, {&m_turret}};
+  frc2::RunCommand m_turretTurnLeft{[this] {m_turret.Turn(m_controller.GetAButton(), m_controller.GetBButton());}, {&m_turret}};
+  frc2::RunCommand m_turretTurnRight{[this] {m_turret.Turn(m_controller.GetAButton(), m_controller.GetBButton());}, {&m_turret}};
+  frc2::RunCommand m_turretStop{[this] {m_turret.Turn(false, false);}, {&m_turret}};
 
-  frc2::RunCommand m_loaderEject{[this] {m_loader.LoadMotor(-1.0);}, {&m_loader}};
-  frc2::RunCommand m_loaderLoad{[this] {m_loader.LoadMotor(1.0);}, {&m_loader}};
+  frc2::RunCommand m_loaderEject{[this] {m_loader.LoadXY(m_controller.GetXButton(), m_controller.GetYButton());}, {&m_loader}};
+  frc2::RunCommand m_loaderLoad{[this] {m_loader.LoadXY(m_controller.GetXButton(), m_controller.GetYButton());}, {&m_loader}};
+  frc2::RunCommand m_loaderStop{[this] {m_loader.LoadXY(false, false);}, {&m_loader}};
+
+  frc2::RunCommand m_spinShooter{[this] {m_shooter.ShootBump(true);}, {&m_shooter}};
+  frc2::RunCommand m_shooterStop{[this] {m_shooter.ShootBump(false);}, {&m_shooter}};
 
   void ConfigureButtonBindings();
 };

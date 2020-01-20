@@ -24,4 +24,4 @@ constexpr int PWM_SHOOTMOTOR = 5;
 constexpr int PWM_TURRETMOTOR = 4;
 constexpr int PWM_LOADMOTOR = 9;
 
-#define NOHW
+//#define NOHW

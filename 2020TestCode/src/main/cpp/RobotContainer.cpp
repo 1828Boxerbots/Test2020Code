@@ -29,14 +29,14 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem)
     {
       m_turret.Turn(m_controller.GetAButton(), m_controller.GetBButton());
     }
-    ,{&m_turret}));*/
+    ,{&m_turret}));
 
-    /*m_loader.SetDefaultCommand(frc2::RunCommand(
+    m_loader.SetDefaultCommand(frc2::RunCommand(
     [this] 
     {
       m_loader.Load(m_controller.GetTriggerAxis(frc::GenericHID::kLeftHand), m_controller.GetTriggerAxis(frc::GenericHID::kRightHand));
     }
-    ,{&m_loader}));*/
+    ,{&m_loader}));
 
     m_loader.SetDefaultCommand(frc2::RunCommand(
     [this] 
@@ -49,8 +49,7 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem)
     [this] 
     {
       m_shooter.ShootBump(m_controller.GetBumper(frc::GenericHID::kLeftHand) || m_controller.GetBumper(frc::GenericHID::kRightHand));
-    }
-    ,{&m_shooter}));
+    ,{&m_shooter}));*/
 }
 
 void RobotContainer::ConfigureButtonBindings()
@@ -62,12 +61,28 @@ void RobotContainer::ConfigureButtonBindings()
   // Configure your button bindings here
   frc2::Button buttonA{[this] {return m_controller.GetAButton();}};
   buttonA.WhileHeld(&m_turretTurnLeft);
-  //buttonA.WhenReleased(&m_turretStop);
+  buttonA.WhenReleased(&m_turretStop);
 
   frc2::Button buttonB{[this] {return m_controller.GetBButton();}};
-  buttonB.WhenHeld(&m_turretTurnLeft);
-  //buttonB.WhenReleased(&m_turretStop);
+  buttonB.WhenHeld(&m_turretTurnRight);
+  buttonB.WhenReleased(&m_turretStop);
 
+  frc2::Button bumperL{[this] {return m_controller.GetBumper(frc::GenericHID::kLeftHand);}};
+  bumperL.WhenHeld(&m_spinShooter);
+  bumperL.WhenReleased(&m_shooterStop);
+
+  frc2::Button bumperR{[this] {return m_controller.GetBumper(frc::GenericHID::kRightHand);}};
+  bumperR.WhenHeld(&m_spinShooter);
+  bumperR.WhenReleased(&m_shooterStop);
+
+  frc2::Button buttonX{[this] {return m_controller.GetXButton();}};
+  buttonX.WhenHeld(&m_loaderEject);
+  buttonX.WhenReleased(&m_loaderStop);
+  frc2::Button buttonY{[this] {return m_controller.GetYButton();}};
+  buttonY.WhenHeld(&m_loaderLoad);
+  buttonY.WhenReleased(&m_loaderStop);
+
+  
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
